@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
 #유저모델
 #회원가입[이름, 이메일, 비밀번호, 비밀번호 확인](아이디 따로 없음 ,이메일을 아이디로 사용)
@@ -9,39 +8,45 @@ from django.contrib.auth.models import AbstractUser
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, email, password, **kwargs):
+    def create_user(self, userName, userEmail, password):
     
         user = self.model(
-            userEmail = email,
+            userName = userName,
+            userEmail = userEmail,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email=None, password=None, **extra_fields):
+    def create_superuser(self, userName, userEmail, password):
         superuser = self.create_user(
-            email=email,
-            password=password,
+            userName = userName,
+            userEmail = userEmail,
         )
+        superuser.set_password(password)
         superuser.is_staff = True
         superuser.is_superuser = True
         superuser.is_active = True
         superuser.save(using=self._db)
         
-        return 
+        return superuser
 
-class User(models.Model):
-    userName = models.CharField(max_length=50) 
-    userPassword = models.CharField(max_length=50)
-    userEmail = models.EmailField(max_length=100)
-    userSubartist = models.ManyToManyField('') 
-    userBuyalbumList = models.ManyToManyField('') 
-    usersSubaumList = models.ManyToManyField('') 
+class User(AbstractBaseUser, PermissionsMixin):
+    userName = models.CharField(max_length=50)
+    userEmail = models.EmailField(max_length=100,unique=True)
+    #userSubartist = models.ManyToManyField('') 
+    #userBuyalbumList = models.ManyToManyField('') 
+    #usersSubaumList = models.ManyToManyField('') 
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+
+    def is_staff(self):
+        return self.is_admin
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'userName'
-    REQUIRED_FIELDS = ['userEmail']
+    USERNAME_FIELD = 'userEmail'
+    REQUIRED_FIELDS = ['userName']
 
     class Meta:
         db_table = 'user'
