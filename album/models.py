@@ -22,7 +22,8 @@ class Album(models.Model):
     created_at = models.DateField(null=True)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE, null=True)
     album_image = models.ImageField(blank = True, null = True, upload_to = 'sang_album_img')
-    music_list = models.ManyToManyField(Music, related_name = 'sang_music_list', blank = True)
+    music_list = models.TextField(null = True)
+    #music_list = models.ManyToManyField(Music, related_name = 'sang_music_list', blank = True)
     price_with_ticket = models.IntegerField(null = True, default = 0)
     price_without_ticket = models.IntegerField(null = True, default = 0)
     purchased_count = models.IntegerField(null = True, default = 0)
@@ -37,7 +38,8 @@ class AlbumFrime(models.Model):
     created_at = models.DateField(null=True)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE, null=True)
     album_image = models.ImageField(blank = True, null = True, upload_to = 'buy_album_img')
-    music_list = models.ManyToManyField(Music, related_name = 'my_music_list', blank = True)
+    #music_list = models.ManyToManyField(Music, related_name = 'my_music_list', blank = True)
+    music_list = models.TextField(null = True)
     #price_with_ticket = models.IntegerField(null = True, default = 0)
     #price_without_ticket = models.IntegerField(null = True, default = 0)
     purchased_date = models.DateField(auto_now_add=True, null=True)
@@ -69,5 +71,12 @@ class PhotocardFrime(models.Model):
     QR_used = models.BooleanField(null = True, default = False)
     register_at = models.DateTimeField(auto_now_add = True, null = True)
 
-# Create your models here.
+class Count(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    album_name = models.TextField(null=True)
+    album_image = models.ImageField(blank = True, null = True, upload_to = 'sang_album_img')
+    count = models.IntegerField(default = 0, null=True)
 
+# Create your models here.

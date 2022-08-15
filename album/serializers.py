@@ -69,3 +69,16 @@ class AlbumListSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = ('userBuyalbum_type_List',)
+    
+
+class CountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Count
+        fields = '__all__'    #추후 앨범 이미지 ..
+
+
+class BuyAlbum_type_id_serializer(serializers.ModelSerializer):
+    #userBuyalbum_type_List = AlbumSerializer(many = True)
+    class Meta:
+        model = User
+        fields = ('userBuyalbum_type_List',)
