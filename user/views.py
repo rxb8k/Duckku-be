@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib import auth
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
 from .models import User
+from album.models import Artist
+from .serializers import UserSerializer
 
 # 회원가입
 class Signup(APIView):
@@ -27,8 +29,9 @@ class Signup(APIView):
 
 
 #로그인
+
 class Login(APIView):
-     def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         userEmail = request.data["userEmail"]
         pwd = request.data["password"]
 
@@ -37,11 +40,19 @@ class Login(APIView):
         # 유저 정보 확인
         if user is not None:
             auth.login(request, user)
+            print(request.user)
             return Response({"id": user.id}, status=200)
-
+        
         # 가입하지 않은 유저인 경우
         else:
             return Response({"message": "유저 정보가 없음"}, status=404)
+
+class userinfo(APIView):
+    def get(self, request):
+        user = request.user
+        data = User.objects.filter(id=user.id)
+        serializer = UserSerializer(data, many=True)
+        return Response(serializer.data)
 
 #로그아웃
 def Logout(self, request):

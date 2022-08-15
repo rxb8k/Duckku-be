@@ -23,10 +23,11 @@ from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('Signup/', csrf_exempt(views.Signup.as_view())),
-    path('Login/', csrf_exempt(views.Login.as_view())),
-    path('Logout/', views.Logout),
+    path('admin', admin.site.urls),
+    path('Signup', csrf_exempt(views.Signup.as_view())),
+    path('Login', views.Login.as_view()),
+    path('Logout', views.Logout),
+    path('userinfo', csrf_exempt(views.userinfo.as_view())),
     path('my_artist_list', artist_views.my_artist_list.as_view()),
     path('my_artist_list/delete/<int:artist_id>', artist_views.delete_my),
     path('show_album_info/<int:sang_album_id>', album_views.AlbumInfo.as_view()),
