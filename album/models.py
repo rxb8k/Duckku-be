@@ -1,6 +1,6 @@
 from distutils.command.upload import upload
 from django.db import models
-from user.views import User
+from user.models import User
 
 class Music(models.Model):
     music_name = models.CharField(max_length = 20, null = True)
