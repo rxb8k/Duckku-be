@@ -56,14 +56,15 @@ class AlbumFrimeInfo(APIView):
 class BuyAlbum(APIView):
     def post(self, request, sang_album_id):
         # json 입력 값들
-        ticket = request.data['album_with_ticket']
-        no_ticket = request.data['album_without_ticket']
+        ticket = int(request.data['album_with_ticket'])
+        no_ticket = int(request.data['album_without_ticket'])
         user = request.user
         sang_album = get_object_or_404(Album, pk = sang_album_id)
 
         #if sang_album not in user.userBuyalbum_type_List:
-        user.userBuyalbum_type_List.add(sang_album)
-        
+        #user.userBuyalbum_type_List.add(sang_album)
+        #user.save()
+
         # 응모권 포함된 앨범 구매하는 과정
         for i in range(ticket):
             sang_album.purchased_count += 1 # 상징성 앨범에 대한 총 판매량 수 증가시키기
@@ -78,8 +79,14 @@ class BuyAlbum(APIView):
             newab.created_at = ab.created_at
             newab.artist = ab.artist
             newab.album_image = ab.album_image
-            #newab.music_list = ab.music_list
-            #newab.music_list.set(ab.music_list)        
+            
+            #list_store = [1,2,3,4,5,'도깨비불', '블랙맘바', 'savage']
+
+            # 수록곡(music_list) 카피하기
+            list_store = list(ab.music_list)
+            str_list_store = ''.join(list_store)
+            new_list = str_list_store.split(',')
+            newab.music_list = json.dumps(new_list, ensure_ascii = False) # 한글 깨짐현상 방지 => ensure_ascii
 
             newab.buyNumber = random.randrange(10000000, 99999999) # 주문번호는 8자리로 설정
             newab.user = user    # 추후 로그인 구현되면 바꿀 부분
@@ -115,9 +122,12 @@ class BuyAlbum(APIView):
             newab.created_at = ab.created_at
             newab.artist = ab.artist
             newab.album_image = ab.album_image
-            #newab.music_list = ab.music_list
-            #for music in ab.music_list:
-            #    newab.music_list.add(music)
+
+            # 수록곡(music_list) 카피하기
+            list_store = list(ab.music_list)
+            str_list_store = ''.join(list_store)
+            new_list = str_list_store.split(',')
+            newab.music_list = json.dumps(new_list, ensure_ascii = False) # 한글 깨짐현상 방지 => ensure_ascii
 
             newab.buyNumber = random.randrange(10000000, 99999999)
             newab.user = user   
@@ -142,6 +152,46 @@ class BuyAlbum(APIView):
             pcf.QR_image = photocard.QR_image
             pcf.QR_used = False
             pcf.save()
+
+        
+        # 이미 구매한 앨범일 때
+        buy_album_id_list = BuyAlbum_type_id_serializer(request.user)
+        my_buy_album_id_list = buy_album_id_list.data['userBuyalbum_type_List']
+
+        check = 0 
+
+        # final_buy_album_id_list = []
+
+        for album_id in my_buy_album_id_list:
+            print("album_id:", album_id)
+            if sang_album_id == album_id: # [1,2,3,4]   => sang_album_id : 2
+                check = 1
+
+        ab = get_object_or_404(Album, pk = sang_album_id)
+
+        if check == 1: # [1,2,3,4]   => sang_album_id : 2
+            # cnt = get_object_or_404(Count, user = user, album = ab)
+            # cnt = Count()
+            # cnt = Count.objects.filter(user = request.user).filter(album = sang_album_id)
+            cnt = get_object_or_404(Count, user = user, album = ab)
+            print(cnt)
+            print(cnt.count)
+            cnt.count += ticket
+            cnt.count += no_ticket
+            cnt.save()
+        else:
+            #print('카운트 만들게~')
+            cnt = Count()
+            cnt.user = user
+            cnt.album = ab
+            cnt.album_name = ab.name
+            cnt.album_image = ab.album_image
+            cnt.count += (ticket + no_ticket)
+            cnt.artist = ab.artist
+            cnt.save()
+        
+        user.userBuyalbum_type_List.add(sang_album)
+        user.save()
 
         return Response({"message":"구매 성공 축하염"})
 
@@ -242,33 +292,39 @@ class Show_artist_list_album_list_sort_created_at(APIView):
 
 
 # 특정 아티스트에 대해 내가 구매한 상징성 앨범 리스트 종류를 조회 (이떄 각 앨범마다의 개수 정보도 띄울것)
+# class buy_album_list(APIView):
+#     def get(self, request, artist_id):
+#         album_list = AlbumListSerializer(request.user)
+#         my_album_list = album_list.data['userBuyalbum_type_List']
+#         my_album_list_id = []
+#         for album in my_album_list: # 앨범 리스트의 각 앨범 id 값을 my_album_list_id 에 저장
+#             my_album_list_id.append(album['id'])
+    
+#         result_album_id_list = []
+       
+#         for album_id in my_album_list_id:
+#             album = get_object_or_404(Album, pk = album_id)
+#             if album.artist.id == artist_id: # 특정 아티스트에 해당하는 상징성 앨범이라면
+#                 result_album_id_list.append(album.id) # 앨범 id 값 리스트에 추가
+#                 #queryset_list.append(album.artist)
+        
+#         queryset_list = Album.objects.filter(pk = result_album_id_list[0]) # 앨범에 대한 쿼리셋
+        
+#         # 결과물 쿼리셋 만들기
+#         for album_id in result_album_id_list:
+#             album = get_list_or_404(Album, pk = album_id)
+#             add_queryset = Album.objects.filter(pk = album_id) 
+#             queryset_list = queryset_list.union(add_queryset) # 쿼리셋에 병합
+        
+#         result_album_list = AlbumSerializer(queryset_list, many = True)
+#         return Response(result_album_list.data)
+
 class buy_album_list(APIView):
     def get(self, request, artist_id):
-        album_list = AlbumListSerializer(request.user)
-        my_album_list = album_list.data['userBuyalbum_type_List']
-        my_album_list_id = []
-        for album in my_album_list: # 앨범 리스트의 각 앨범 id 값을 my_album_list_id 에 저장
-            my_album_list_id.append(album['id'])
-    
-        result_album_id_list = []
-       
-        for album_id in my_album_list_id:
-            album = get_object_or_404(Album, pk = album_id)
-            if album.artist.id == artist_id: # 특정 아티스트에 해당하는 상징성 앨범이라면
-                result_album_id_list.append(album.id) # 앨범 id 값 리스트에 추가
-                #queryset_list.append(album.artist)
-        
-        queryset_list = Album.objects.filter(pk = result_album_id_list[0]) # 앨범에 대한 쿼리셋
-        
-        # 결과물 쿼리셋 만들기
-        for album_id in result_album_id_list:
-            album = get_list_or_404(Album, pk = album_id)
-            add_queryset = Album.objects.filter(pk = album_id) 
-            queryset_list = queryset_list.union(add_queryset) # 쿼리셋에 병합
-        
-        result_album_list = AlbumSerializer(queryset_list, many = True)
-        return Response(result_album_list.data)
-
+        artist = get_object_or_404(Artist, pk = artist_id)
+        cnt = Count.objects.filter(user = request.user).filter(artist = artist)
+        serializerd_rooms = CountSerializer(cnt, many=True)
+        return Response(serializerd_rooms.data)
 
 '''
 # 특정 아티스트에 대해 내가 구매한 상징성 앨범 리스트 종류를 조회 (이떄 각 앨범마다의 개수 정보도 띄울것)
