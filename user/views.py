@@ -118,3 +118,27 @@ class account_API(APIView):
         user.save()
         return Response(user.user_color)
  '''
+
+
+# 아티스트 구독, 삭제
+class SubArtist(APIView):
+    def patch(self, request):
+        req_artist=get_object_or_404(Artist, artist_Name=request.artist)
+        user=request.user
+
+        user.userSubartist.add(req_artist) # pk
+        user.save()
+        return Response({
+            "artists" : user.userSubartist
+        })
+        
+    def delete(self, request):
+        req_artist=get_object_or_404(Artist, artist_Name=request.artist)
+        user=request.user
+        
+        user.userSubartist.remove(req_artist) # pk
+        user.save()
+
+        return Response({
+            "artists" : user.userSubartist
+        })
