@@ -402,7 +402,7 @@ class about_photocard_pr(APIView):
 
 ##############################################################################
 
-
+'''
 # 상징성 앨범에 속한 상징성 포토카드 모두 불러오기
 class GetPhotocardsInAlbum(APIView):
     def get(self, request, ab_id):
@@ -418,3 +418,4 @@ class GetPhotocardsFrime(APIView):
         pc = pc.filter(user = user_id)  # 특정 유저가 구매한 포토카드 불러오기
         serialized_rooms = PhotocardFrimeSerializer(pc, many=True)
         return Response(serialized_rooms.data)
+'''
