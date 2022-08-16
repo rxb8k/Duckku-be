@@ -28,6 +28,7 @@ urlpatterns = [
     path('Login', views.Login.as_view()),
     path('Logout', views.Logout),
     path('userinfo', csrf_exempt(views.userinfo.as_view())),
+    path('sub_artist', csrf_exempt(views.SubArtist.as_view())),
     path('my_artist_list', artist_views.my_artist_list.as_view()),
     path('my_artist_list/delete/<int:artist_id>', artist_views.delete_my),
     path('show_album_info/<int:sang_album_id>', album_views.AlbumInfo.as_view()),
