@@ -64,7 +64,7 @@ class userinfo(APIView):
         user.userEmail=request.data['userEmail']
         if request.data["password1"] != request.data["password2"]:
             return Response({
-                {"message": "비밀번호가 다릅니다"}
+                "message": "비밀번호가 다릅니다"
             })
         else:
             user.set_password(request.data["password1"])
