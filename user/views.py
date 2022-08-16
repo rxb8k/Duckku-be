@@ -123,20 +123,20 @@ class account_API(APIView):
 # 아티스트 구독, 삭제
 class SubArtist(APIView):
     def patch(self, request):
-        req_artist=get_object_or_404(Artist, artist_Name=request.artist)
+        req_artist=get_object_or_404(Artist, artist_name=request.data['artist'])
         user=request.user
 
-        user.userSubartist.add(req_artist) # pk
+        user.userSubartist_type_List.add(req_artist) # pk
         user.save()
         return Response({
             "artists" : user.userSubartist
         })
         
     def delete(self, request):
-        req_artist=get_object_or_404(Artist, artist_Name=request.artist)
+        req_artist=get_object_or_404(Artist, artist_name=request.data['artist'])
         user=request.user
         
-        user.userSubartist.remove(req_artist) # pk
+        user.userSubartist_type_List.remove(req_artist) # pk
         user.save()
 
         return Response({
