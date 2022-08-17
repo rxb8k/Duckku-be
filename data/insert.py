@@ -56,7 +56,7 @@ def makeJsonData_Album():
       'name' : album,
       'agency' : agency,
       'created_at' : f"{year}-{month}-1 00:00:00",
-      'artist' : ARTIST_ID[artist],
+      'artist' : ARTIST_ID[artist], # fk
       'album_image' : '',
       'music_list' : music,
       'price_with_ticket' : priceWithT,
@@ -75,8 +75,8 @@ def makeJsonData_Photocard():
     photocard_data=OrderedDict()
     photocard_data["model"]="album.Photocard"
     photocard_data["fields"]={
-      'album_id' : album,
-      'artist' : artist,
+      'album_id' : album, # fk
+      'artist' : artist, # fk
       'img' : f"{year}-{month}-1 00:00:00",
       'name' : ARTIST_ID[artist],
       'album_image' : '',
