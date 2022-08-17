@@ -3,14 +3,24 @@ import json
 from collections import OrderedDict
 import glob
 
-ARTIST_ID={}
-# {'소녀시대': 1, '레드벨벳': 2, '에스파': 3, 'BTS': 4, '세븐틴': 5, '블랙핑크': 6, 
-# '트와이스': 7, 'ITZY': 8, '아이브': 9, '몬스타액스': 10, '아이들': 11, '아이유': 12}
+ALL_MEMBERS=[]
+MEMBER_GROUP={} # 멤버-그룹 매핑
+ARTIST_ID={} # 아티스트 PK
+#   {'소녀시대': 1, '레드벨벳': 2, '에스파': 3, 'BTS': 4, '세븐틴': 5, '블랙핑크': 6, 
+#   '트와이스': 7, 'ITZY': 8, '아이브': 9, '몬스타액스': 10, '아이들': 11, '아이유': 12}
 
+group_mem_txt=open('group_members.txt','r')
+group_mem_csv=pd.read_csv(group_mem_txt, sep='\t')
+member_list=group_mem_csv['Member']
+group_list=group_mem_csv['Group']
+MEMBER_GROUP={ m:g for m, g in zip(member_list, group_list) }
+
+
+# 아티스트 객체 JSON 데이터 생성
 def makeJsonData_Artist():
+  artist_data_list=[]
   artist_txt = open('artist.txt', 'r')
   artist_csv = pd.read_csv(artist_txt, sep='\t')
-  artist_data_list=[]
 
   id_list=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   artist_list=artist_csv['artist']
@@ -34,9 +44,10 @@ def makeJsonData_Artist():
 
 
 
+# 앨범 객체 JSON 데이터 생성
 def makeJsonData_Album():
-  album_xlsx=pd.read_excel('album.xlsx')
   album_data_list=[]
+  album_xlsx=pd.read_excel('album.xlsx')
   
   album_name_list=album_xlsx['앨범명']
   agency_list=album_xlsx['소속사']
@@ -69,22 +80,34 @@ def makeJsonData_Album():
 
 
 
+# 포토카드 객체 JSON 데이터 생성
 def makeJsonData_Photocard():
   photocard_data_list=[]
-  for album in zip():
-    photocard_data=OrderedDict()
-    photocard_data["model"]="album.Photocard"
-    photocard_data["fields"]={
-      'album_id' : album, # fk
-      'artist' : artist, # fk
-      'img' : f"{year}-{month}-1 00:00:00",
-      'name' : ARTIST_ID[artist],
-      'album_image' : '',
-    }
-    photocard_data_list.append(photocard_data)
+  image_list=glob.glob('./img/photocard/*.jpg') # 경로 확인 필요
+
+  album_xlsx=pd.read_excel('album.xlsx')
   
-  with open('photocard-data.json', 'w', encoding="utf-8") as make_file:
-    json.dump(photocard_data_list, make_file, ensure_ascii=False, indent="\t")
+  album_name_list=album_xlsx['앨범명']
+  artist_list=album_xlsx['아티스트']
+
+  for Photoimg in image_list: # 하나의 포토카드 이미지에 대해
+    for album in album_name_list: # 앨범 개수만큼의 포토카드 객체 생성
+        photocard_data=OrderedDict()
+        name=Photoimg[16:-5]
+        photocard_data["model"]="album.Photocard"
+        photocard_data["fields"]={
+          'id' : 1,
+          'album_id' : album, # fk
+          'artist' : MEMBER_GROUP[name], # fk
+          'img' : Photoimg,
+          'name' : name,
+          'album_image' : '',
+        }
+        # if name not in ALL_MEMBERS: ALL_MEMBERS.append(Photoimg[16:-5])
+        photocard_data_list.append(photocard_data)
+      
+    with open('photocard-data.json', 'w', encoding="utf-8") as make_file:
+      json.dump(photocard_data_list, make_file, ensure_ascii=False, indent="\t")
 
 
 # 각 모델에 대해 makeJsonData 함수 실행
