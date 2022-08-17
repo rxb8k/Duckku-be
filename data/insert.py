@@ -36,7 +36,6 @@ def makeJsonData_Artist():
 
 def makeJsonData_Album():
   album_xlsx=pd.read_excel('album.xlsx')
-  print(album_xlsx)
   album_data_list=[]
   
   album_name_list=album_xlsx['앨범명']
@@ -69,9 +68,25 @@ def makeJsonData_Album():
     json.dump(album_data_list, make_file, ensure_ascii=False, indent="\t")
 
 
+def makeJsonData_Photocard():
+  photocard_data_list=[]
+  for album, agency, artist, albumType, year, month, music, priceWithT, priceWithout in zip():
+    photocard_data=OrderedDict()
+    photocard_data["model"]="album.Photocard"
+    photocard_data["fields"]={
+      'album_id' : album,
+      'artist' : artist,
+      'img' : f"{year}-{month}-1 00:00:00",
+      'name' : ARTIST_ID[artist],
+      'album_image' : '',
+    }
+    photocard_data_list.append(photocard_data)
+  
+  with open('photocard-data.json', 'w', encoding="utf-8") as make_file:
+    json.dump(photocard_data_list, make_file, ensure_ascii=False, indent="\t")
 
 
-
-# makeJsonData 함수 실행
+# 각 모델에 대해 makeJsonData 함수 실행
 makeJsonData_Artist()
 makeJsonData_Album()
+makeJsonData_Photocard()
