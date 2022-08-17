@@ -47,11 +47,28 @@ class Login(APIView):
         else:
             return Response({"message": "유저 정보가 없음"}, status=404)
 
+# 내 정보 보기, 내 정보 수정
 class userinfo(APIView):
     def get(self, request):
         user = request.user
         data = User.objects.filter(id=user.id)
         serializer = UserSerializer(data, many=True)
+        return Response(serializer.data)
+
+    def patch(self, request):
+        user=request.user
+        data=User.objects.filter(id=user.id)
+        serializer = UserSerializer(data, many=True)
+        
+        user.userName=request.data['userName']
+        user.userEmail=request.data['userEmail']
+        if request.data["password1"] != request.data["password2"]:
+            return Response({
+                "message": "비밀번호가 다릅니다"
+            })
+        else:
+            user.set_password(request.data["password1"])
+        user.save()
         return Response(serializer.data)
 
 #로그아웃
