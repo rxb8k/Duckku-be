@@ -1,0 +1,27 @@
+agency	artist
+SM	소녀시대
+SM	레드벨벳
+SM	에스파
+SM	NCT
+SM	태연
+HYBE	BTS
+HYBE	세븐틴
+HYBE	르세라핌
+HYBE	뉴진스
+HYBE	프로미스나인
+YG	블랙핑크
+YG 	악동뮤지션
+YG 	빅뱅
+JYP	트와이스
+JYP	ITZY
+JYP	엔믹스
+JYP	스트레이키즈
+스타쉽	아이브
+스타쉽	몬스타액스
+큐브	아이들
+이담	아이유
+빅히트	TXT
+MNH	청하
+WAKE ONE	Kep1er
+WAKE ONE	조유리
+미스틱스토리	Billlie

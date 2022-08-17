@@ -1,0 +1,210 @@
+[
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "소녀시대",
+			"agency": "SM",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "레드벨벳",
+			"agency": "SM",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "에스파",
+			"agency": "SM",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "NCT",
+			"agency": "SM",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "태연",
+			"agency": "SM",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "BTS",
+			"agency": "HYBE",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "세븐틴",
+			"agency": "HYBE",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "르세라핌",
+			"agency": "HYBE",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "뉴진스",
+			"agency": "HYBE",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "프로미스나인",
+			"agency": "HYBE",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "블랙핑크",
+			"agency": "YG",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "악동뮤지션",
+			"agency": "YG ",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "빅뱅",
+			"agency": "YG ",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "트와이스",
+			"agency": "JYP",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "ITZY",
+			"agency": "JYP",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "엔믹스",
+			"agency": "JYP",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "스트레이키즈",
+			"agency": "JYP",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "아이브",
+			"agency": "스타쉽",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "몬스타액스",
+			"agency": "스타쉽",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "아이들",
+			"agency": "큐브",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "아이유",
+			"agency": "이담",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "TXT",
+			"agency": "빅히트",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "청하",
+			"agency": "MNH",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "Kep1er",
+			"agency": "WAKE ONE",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "조유리",
+			"agency": "WAKE ONE",
+			"artist_image": ""
+		}
+	},
+	{
+		"model": "album.artist",
+		"fields": {
+			"artist_name": "Billlie",
+			"agency": "미스틱스토리",
+			"artist_image": ""
+		}
+	}
+]
