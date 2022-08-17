@@ -68,9 +68,10 @@ def makeJsonData_Album():
     json.dump(album_data_list, make_file, ensure_ascii=False, indent="\t")
 
 
+
 def makeJsonData_Photocard():
   photocard_data_list=[]
-  for album, agency, artist, albumType, year, month, music, priceWithT, priceWithout in zip():
+  for album in zip():
     photocard_data=OrderedDict()
     photocard_data["model"]="album.Photocard"
     photocard_data["fields"]={
