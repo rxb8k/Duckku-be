@@ -41,7 +41,12 @@ class AlbumInfo(APIView):
     def get(self, request, sang_album_id):
         ab = get_object_or_404(Album, pk = sang_album_id)
         serialized_rooms = AlbumSerializer(ab)
-        return Response(serialized_rooms.data)
+        
+        songs = ab.music_list
+        newlist = songs.split(',')
+        # newlist = json.dumps(newlist, ensure_ascii = False)
+
+        return Response({"album info":serialized_rooms.data, "musiclist":newlist})
 
 
 # 구매한 앨범에 관한 정보 불러오기  (필요 없을지도?)
