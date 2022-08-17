@@ -1,8 +1,9 @@
 import pandas as pd
 import json
 from collections import OrderedDict
+import glob
 
-def insertData_Artist():
+def makeJsonData_Artist():
   artist_txt = open('artist.txt', 'r')
   artist_csv = pd.read_csv(artist_txt, sep='\t')
 
@@ -10,18 +11,19 @@ def insertData_Artist():
   
   agency_list=artist_csv['agency']
   artist_list=artist_csv['artist']
-  # image 필요
+  image_list=glob.glob('./img/artist/*.jpg') # 경로 확인 필요
   print(artist_list)
+  print(image_list)
 
   artist_data_list=[]
 
-  for artist, agency in zip(artist_list, agency_list):
+  for artist, agency, img in zip(artist_list, agency_list, image_list):
     artist_data=OrderedDict()
     artist_data["model"]="album.artist"
     artist_data["fields"]={
       'artist_name' : artist,
       'agency' : agency,
-      'artist_image' : '',
+      'artist_image' : img,
     }
     artist_data_list.append(artist_data)
   
@@ -29,4 +31,5 @@ def insertData_Artist():
     json.dump(artist_data_list, make_file, ensure_ascii=False, indent="\t")
 
   
-insertData_Artist()
+# makeJsonData 함수 실행
+makeJsonData_Artist()
