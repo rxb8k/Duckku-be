@@ -1,0 +1,110 @@
+[
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 1,
+			"artist_name": "소녀시대",
+			"agency": "SM",
+			"artist_image": "./img/artist/뉴진스.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 2,
+			"artist_name": "레드벨벳",
+			"agency": "SM",
+			"artist_image": "./img/artist/세븐틴.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 3,
+			"artist_name": "에스파",
+			"agency": "SM",
+			"artist_image": "./img/artist/블랙핑크.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 4,
+			"artist_name": "BTS",
+			"agency": "HYBE",
+			"artist_image": "./img/artist/몬스타엑스.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 5,
+			"artist_name": "세븐틴",
+			"agency": "HYBE",
+			"artist_image": "./img/artist/아이들.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 6,
+			"artist_name": "블랙핑크",
+			"agency": "YG",
+			"artist_image": "./img/artist/트와이스.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 7,
+			"artist_name": "트와이스",
+			"agency": "JYP",
+			"artist_image": "./img/artist/아이유.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 8,
+			"artist_name": "ITZY",
+			"agency": "JYP",
+			"artist_image": "./img/artist/아이브.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 9,
+			"artist_name": "아이브",
+			"agency": "스타쉽",
+			"artist_image": "./img/artist/ITZY.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 10,
+			"artist_name": "몬스타액스",
+			"agency": "스타쉽",
+			"artist_image": "./img/artist/BTS.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 11,
+			"artist_name": "아이들",
+			"agency": "큐브",
+			"artist_image": "./img/artist/레드벨벳.jpg"
+		}
+	},
+	{
+		"model": "album.Artist",
+		"fields": {
+			"id": 12,
+			"artist_name": "아이유",
+			"agency": "이담",
+			"artist_image": "./img/artist/에스파.jpg"
+		}
+	}
+]
