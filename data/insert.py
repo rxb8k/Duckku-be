@@ -33,6 +33,7 @@ def makeJsonData_Artist():
     json.dump(artist_data_list, make_file, ensure_ascii=False, indent="\t")
 
 
+
 def makeJsonData_Album():
   album_xlsx=pd.read_excel('album.xlsx')
   print(album_xlsx)
@@ -55,7 +56,7 @@ def makeJsonData_Album():
     album_data["fields"]={
       'name' : album,
       'agency' : agency,
-      'created_at' : 'year',
+      'created_at' : f"{year}-{month}-1 00:00:00",
       'artist' : ARTIST_ID[artist],
       'album_image' : '',
       'music_list' : music,

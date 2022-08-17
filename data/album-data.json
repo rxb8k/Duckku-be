@@ -4,7 +4,7 @@
 		"fields": {
 			"name": "FOREVER 1",
 			"agency": "SM",
-			"created_at": "year",
+			"created_at": "2022-8-1 00:00:00",
 			"artist": 1,
 			"album_image": "",
 			"music_list": "아, 아, 아,아,앙,앙,",
@@ -17,7 +17,7 @@
 		"fields": {
 			"name": "The ReVe Festival 2022",
 			"agency": "SM",
-			"created_at": "year",
+			"created_at": "2022-3-1 00:00:00",
 			"artist": 2,
 			"album_image": "",
 			"music_list": "킼,킼,킼,ㅋㅋ,3ㅣㅇ,",
@@ -30,7 +30,7 @@
 		"fields": {
 			"name": "Girls",
 			"agency": "SM",
-			"created_at": "year",
+			"created_at": "2022-7-1 00:00:00",
 			"artist": 3,
 			"album_image": "",
 			"music_list": "ㅇㅁㄹ.ㅁㄴㅇ,ㄹㅇ,ㄹㄹㅇ,ㅇㄹ",
