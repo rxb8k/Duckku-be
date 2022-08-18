@@ -44,6 +44,8 @@ urlpatterns = [
     path('<int:artist_id>/buy_ticket_count', album_views.buy_ticket_count.as_view()),
     path('<int:artist_id>/ticket_use_complete', album_views.ticket_use_complete.as_view()),
     path('qr/<int:photocard_id>', album_views.about_photocard_pr.as_view()),
+    path('album_music_list_info/<int:sang_album_id>', album_views.Album_music_list_info.as_view()),
+    path('show_all_artist_info', album_views.show_all_artist_info.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404, render, get_list_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
+
+from artist.serializers import ArtistSerializer
 from .serializers import *
 from artist.serializers import Artist_type_Serializer
 #from .models import *
@@ -41,12 +43,67 @@ class AlbumInfo(APIView):
     def get(self, request, sang_album_id):
         ab = get_object_or_404(Album, pk = sang_album_id)
         serialized_rooms = AlbumSerializer(ab)
-        
-        songs = ab.music_list
-        newlist = songs.split(',')
+        #songs = ab.music_list
+        #newlist = songs.split(',')
         # newlist = json.dumps(newlist, ensure_ascii = False)
+        return Response(serialized_rooms.data)
+        #return Response({"album info":serialized_rooms.data, "musiclist":newlist})
 
-        return Response({"album info":serialized_rooms.data, "musiclist":newlist})
+
+# 상징성 앨범에 종속한 수록곡 리스트 정보 띄우기
+class Album_music_list_info(APIView):
+    def get(self, request, sang_album_id):
+        ab = get_object_or_404(Album, pk = sang_album_id)
+        particular_album = AlbumSerializer(ab)
+
+        music_id_list = particular_album.data['music_list']
+
+        queryset_list = Music.objects.filter(pk = music_id_list[0])
+        
+        for music_id in music_id_list:
+            music = Music.objects.filter(pk = music_id)
+            queryset_list = queryset_list.union(music)
+        
+        result_music_list = MusicSerializer(queryset_list, many = True)
+
+        return Response(result_music_list.data)
+
+
+class show_all_artist_info(APIView):
+    def get(self, request):
+        artist_list = Artist.objects.all()
+        all_artist = ArtistSerializer(artist_list, many = True)
+        return Response(all_artist.data)
+    
+
+
+# 특정 아티스트에 대해 내가 구매한 상징성 앨범 리스트 종류를 조회 (이떄 각 앨범마다의 개수 정보도 띄울것)
+# class buy_album_list(APIView):
+#     def get(self, request, artist_id):
+#         album_list = AlbumListSerializer(request.user)
+#         my_album_list = album_list.data['userBuyalbum_type_List']
+#         my_album_list_id = []
+#         for album in my_album_list: # 앨범 리스트의 각 앨범 id 값을 my_album_list_id 에 저장
+#             my_album_list_id.append(album['id'])
+    
+#         result_album_id_list = []
+       
+#         for album_id in my_album_list_id:
+#             album = get_object_or_404(Album, pk = album_id)
+#             if album.artist.id == artist_id: # 특정 아티스트에 해당하는 상징성 앨범이라면
+#                 result_album_id_list.append(album.id) # 앨범 id 값 리스트에 추가
+#                 #queryset_list.append(album.artist)
+        
+#         queryset_list = Album.objects.filter(pk = result_album_id_list[0]) # 앨범에 대한 쿼리셋
+        
+#         # 결과물 쿼리셋 만들기
+#         for album_id in result_album_id_list:
+#             album = get_list_or_404(Album, pk = album_id)
+#             add_queryset = Album.objects.filter(pk = album_id) 
+#             queryset_list = queryset_list.union(add_queryset) # 쿼리셋에 병합
+        
+#         result_album_list = AlbumSerializer(queryset_list, many = True)
+#         return Response(result_album_list.data)
 
 
 # 구매한 앨범에 관한 정보 불러오기  (필요 없을지도?)
@@ -88,10 +145,10 @@ class BuyAlbum(APIView):
             #list_store = [1,2,3,4,5,'도깨비불', '블랙맘바', 'savage']
 
             # 수록곡(music_list) 카피하기
-            list_store = list(ab.music_list)
-            str_list_store = ''.join(list_store)
-            new_list = str_list_store.split(',')
-            newab.music_list = json.dumps(new_list, ensure_ascii = False) # 한글 깨짐현상 방지 => ensure_ascii
+            #list_store = list(ab.music_list)
+            #str_list_store = ''.join(list_store)
+            #new_list = str_list_store.split(',')
+            #newab.music_list = json.dumps(new_list, ensure_ascii = False) # 한글 깨짐현상 방지 => ensure_ascii
 
             newab.buyNumber = random.randrange(10000000, 99999999) # 주문번호는 8자리로 설정
             newab.user = user    # 추후 로그인 구현되면 바꿀 부분
@@ -129,10 +186,10 @@ class BuyAlbum(APIView):
             newab.album_image = ab.album_image
 
             # 수록곡(music_list) 카피하기
-            list_store = list(ab.music_list)
-            str_list_store = ''.join(list_store)
-            new_list = str_list_store.split(',')
-            newab.music_list = json.dumps(new_list, ensure_ascii = False) # 한글 깨짐현상 방지 => ensure_ascii
+            #list_store = list(ab.music_list)
+            #str_list_store = ''.join(list_store)
+            #new_list = str_list_store.split(',')
+            #newab.music_list = json.dumps(new_list, ensure_ascii = False) # 한글 깨짐현상 방지 => ensure_ascii
 
             newab.buyNumber = random.randrange(10000000, 99999999)
             newab.user = user   
