@@ -17,15 +17,16 @@ MEMBER_GROUP={ m:g for m, g in zip(member_list, group_list) }
 # 아티스트 객체 JSON 데이터 생성
 def makeJsonData_Artist():
   artist_data_list=[]
-  artist_txt = open('artist.txt', 'r')
-  artist_csv = pd.read_csv(artist_txt, sep='\t')
+  artist_xlsx=pd.read_excel('artist.xlsx')
 
   id_list=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-  artist_list=artist_csv['artist']
-  agency_list=artist_csv['agency']
+  artist_list=artist_xlsx['artist']
+  agency_list=artist_xlsx['agency']
+  color1_list=artist_xlsx['color1']
+  color2_list=artist_xlsx['color2']
   image_list=glob.glob('./img/artist/*.jpg') # 경로 확인 필요
 
-  for id, artist, agency, img in zip(id_list, artist_list, agency_list, image_list):
+  for id, artist, agency, img, color1, color2 in zip(id_list, artist_list, agency_list, image_list, color1_list, color2_list):
     artist_data=OrderedDict()
     artist_data["model"]="album.Artist"
     artist_data["fields"]={
@@ -33,6 +34,9 @@ def makeJsonData_Artist():
       'artist_name' : artist,
       'agency' : agency,
       'artist_image' : glob.glob(f'./img/artist/{id}.jpg'),
+      'logo_image' : glob.glob(f'./img/artist/{id}.jpg'), # 추후 로고 이미지로 변경 필요
+      'gradient_color_1' : color1,
+      'gradient_color_2' : color2,
     }
     ARTIST_ID[artist]=id
     artist_data_list.append(artist_data)
@@ -57,8 +61,10 @@ def makeJsonData_Album():
   price_withoutT_list=album_xlsx['응모권미포함가격']
   album_type_list=album_xlsx['앨범 종류']
 
-  for album, agency, artist, albumType, year, month, music, priceWithT, priceWithout in zip(album_name_list, agency_list, artist_list, album_type_list, 
-  created_year_list, created_month_list, music_list, price_withT_list, price_withoutT_list):
+  for album, agency, artist, albumType, year, month, music, priceWithT, priceWithout in zip(album_name_list, agency_list, 
+  artist_list, album_type_list, 
+  created_year_list, created_month_list, 
+  music_list, price_withT_list, price_withoutT_list):
     album_data=OrderedDict()
     album_data["model"]="album.Album"
     album_data["fields"]={

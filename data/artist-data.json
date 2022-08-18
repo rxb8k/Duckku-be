@@ -7,7 +7,12 @@
 			"agency": "SM",
 			"artist_image": [
 				"./img/artist/1.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/1.jpg"
+			],
+			"gradient_color_1": "#ff84c3",
+			"gradient_color_2": "#facce3"
 		}
 	},
 	{
@@ -18,7 +23,12 @@
 			"agency": "SM",
 			"artist_image": [
 				"./img/artist/2.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/2.jpg"
+			],
+			"gradient_color_1": "#ff9b7b",
+			"gradient_color_2": "#ffc6b4"
 		}
 	},
 	{
@@ -29,7 +39,12 @@
 			"agency": "SM",
 			"artist_image": [
 				"./img/artist/3.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/3.jpg"
+			],
+			"gradient_color_1": "#9fe3fb",
+			"gradient_color_2": "#c09de2"
 		}
 	},
 	{
@@ -40,7 +55,12 @@
 			"agency": "HYBE",
 			"artist_image": [
 				"./img/artist/4.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/4.jpg"
+			],
+			"gradient_color_1": "#000000",
+			"gradient_color_2": "#919191"
 		}
 	},
 	{
@@ -51,7 +71,12 @@
 			"agency": "HYBE",
 			"artist_image": [
 				"./img/artist/5.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/5.jpg"
+			],
+			"gradient_color_1": "#f6c9c8",
+			"gradient_color_2": "#92a8d1"
 		}
 	},
 	{
@@ -62,7 +87,12 @@
 			"agency": "YG",
 			"artist_image": [
 				"./img/artist/6.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/6.jpg"
+			],
+			"gradient_color_1": "#f7a7bb",
+			"gradient_color_2": "#000000"
 		}
 	},
 	{
@@ -73,18 +103,28 @@
 			"agency": "JYP",
 			"artist_image": [
 				"./img/artist/7.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/7.jpg"
+			],
+			"gradient_color_1": "#ff5fa2",
+			"gradient_color_2": "#fcc89b"
 		}
 	},
 	{
 		"model": "album.Artist",
 		"fields": {
 			"id": 8,
-			"artist_name": "ITZY",
+			"artist_name": "있지",
 			"agency": "JYP",
 			"artist_image": [
 				"./img/artist/8.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/8.jpg"
+			],
+			"gradient_color_1": "#eb1b9f",
+			"gradient_color_2": "#fccdeb"
 		}
 	},
 	{
@@ -95,18 +135,28 @@
 			"agency": "스타쉽",
 			"artist_image": [
 				"./img/artist/9.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/9.jpg"
+			],
+			"gradient_color_1": "#000000",
+			"gradient_color_2": "#9c796e"
 		}
 	},
 	{
 		"model": "album.Artist",
 		"fields": {
 			"id": 10,
-			"artist_name": "몬스타액스",
+			"artist_name": "몬스타엑스",
 			"agency": "스타쉽",
 			"artist_image": [
 				"./img/artist/10.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/10.jpg"
+			],
+			"gradient_color_1": "#00008b",
+			"gradient_color_2": "#b5008c"
 		}
 	},
 	{
@@ -117,7 +167,12 @@
 			"agency": "큐브",
 			"artist_image": [
 				"./img/artist/11.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/11.jpg"
+			],
+			"gradient_color_1": "#e11900",
+			"gradient_color_2": "#7e00bf"
 		}
 	},
 	{
@@ -128,7 +183,12 @@
 			"agency": "이담",
 			"artist_image": [
 				"./img/artist/12.jpg"
-			]
+			],
+			"logo_image": [
+				"./img/artist/12.jpg"
+			],
+			"gradient_color_1": "#e4e724",
+			"gradient_color_2": "#fdff7f"
 		}
 	}
 ]

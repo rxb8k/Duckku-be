@@ -1,13 +1,13 @@
-agency	artist
-SM	소녀시대
-SM	레드벨벳
-SM	에스파
-HYBE	BTS
-HYBE	세븐틴
-YG	블랙핑크
-JYP	트와이스
-JYP	ITZY
-스타쉽	아이브
-스타쉽	몬스타액스
-큐브	아이들
-이담	아이유
+agency	artist	color1	color2
+SM	소녀시대	#ff84c3	#facce3
+SM	레드벨벳	#ff9b7b	#ffc6b4
+SM	에스파	#9fe3fb	#c09de2
+HYBE	BTS	#000000	#919191
+HYBE	세븐틴	#f6c9c8	#92a8d1
+YG	블랙핑크	#f7a7bb	#000000
+JYP	트와이스	#ff5fa2	#fcc89b
+JYP	ITZY	#eb1b9f	#fccdeb
+스타쉽	아이브	#000000	#9c796e
+스타쉽	몬스타액스	#00008b	#b5008c
+큐브	아이들	#e11900	#7e00bf
+이담	아이유	#e4e724	#fdff7f
