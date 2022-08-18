@@ -140,22 +140,38 @@ class account_API(APIView):
 # 아티스트 구독, 삭제
 class SubArtist(APIView):
     def patch(self, request):
-        req_artist=get_object_or_404(Artist, artist_name=request.data['artist'])
-        user=request.user
+        # print(request.data) # {'artists': ['아이브', '에스파']}
 
-        user.userSubartist_type_List.add(req_artist) # pk
+        # request.data의 'artists'에 담긴 리스트를 순회하며 'req_artist' 리스트에 추가
+        req_artist=[]
+        artist_len=len(request.data['artists'])
+        for i in range(artist_len): req_artist.append(request.data['artists'][i])
+        print(req_artist)
+        
+        user=request.user
+        for artist_id in req_artist:
+            artist=get_object_or_404(Artist, pk = artist_id)
+            user.userSubartist_type_List.add(artist)
+            print(user.userSubartist_type_List)
         user.save()
+
         return Response({
-            "artists" : user.userSubartist
+            "message" : "관심 아티스트 구독이 완료되었어요!"
         })
         
     def delete(self, request):
-        req_artist=get_object_or_404(Artist, artist_name=request.data['artist'])
-        user=request.user
+        req_artist=[]
+        artist_len=len(request.data['artists'])
+        for i in range(artist_len): req_artist.append(request.data['artists'][i])
+        print(req_artist)
         
-        user.userSubartist_type_List.remove(req_artist) # pk
+        user=request.user
+        for artist_id in req_artist:
+            artist=get_object_or_404(Artist, pk = artist_id)
+            user.userSubartist_type_List.remove(artist)
+            print(user.userSubartist_type_List)
         user.save()
 
         return Response({
-            "artists" : user.userSubartist
+            "message" : "관심 아티스트가 삭제되었습니다."
         })
