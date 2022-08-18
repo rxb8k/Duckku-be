@@ -6,8 +6,6 @@ import glob
 ALL_MEMBERS=[]
 MEMBER_GROUP={} # 멤버-그룹 매핑
 ARTIST_ID={} # 아티스트 PK
-#   {'소녀시대': 1, '레드벨벳': 2, '에스파': 3, 'BTS': 4, '세븐틴': 5, '블랙핑크': 6, 
-#   '트와이스': 7, 'ITZY': 8, '아이브': 9, '몬스타액스': 10, '아이들': 11, '아이유': 12}
 
 group_mem_txt=open('group_members.txt','r')
 group_mem_csv=pd.read_csv(group_mem_txt, sep='\t')
