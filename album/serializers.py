@@ -82,3 +82,8 @@ class BuyAlbum_type_id_serializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('userBuyalbum_type_List',)
+
+class MusicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Music
+        fields = '__all__'
