@@ -27,6 +27,7 @@ class Album(models.Model):
     price_with_ticket = models.IntegerField(null = True, default = 0)
     price_without_ticket = models.IntegerField(null = True, default = 0)
     purchased_count = models.IntegerField(null = True, default = 0)
+    album_type = models.CharField(max_length=20, null=True)
 
     def __str__(self): 
         return self.name
@@ -47,6 +48,7 @@ class AlbumFrime(models.Model):
     contains_ticket = models.BooleanField(null=True)
     #buyNumber = models.DateTimeField(auto_now_add = True, null = True)
     buyNumber = models.IntegerField(null = True, default = 0)
+    album_type = models.CharField(max_length=20, null=True)
 
     def __str__(self): 
         return self.name

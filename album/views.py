@@ -84,6 +84,7 @@ class BuyAlbum(APIView):
             newab.created_at = ab.created_at
             newab.artist = ab.artist
             newab.album_image = ab.album_image
+            newab.album_type = ab.album_type
             
             #list_store = [1,2,3,4,5,'도깨비불', '블랙맘바', 'savage']
 
@@ -127,6 +128,7 @@ class BuyAlbum(APIView):
             newab.created_at = ab.created_at
             newab.artist = ab.artist
             newab.album_image = ab.album_image
+            newab.album_type = ab.album_type
 
             # 수록곡(music_list) 카피하기
             list_store = list(ab.music_list)
@@ -144,9 +146,6 @@ class BuyAlbum(APIView):
             pcf = PhotocardFrime()  # 구매한 포토카드 생성하기
 
             # 구매한 포토카드에 상징성 포토카드에 관한 정보 넣기
-            photocards = Photocard.objects.filter(album_id = sang_album_id)
-            photocard = random.choice(photocards)
-            pcf = PhotocardFrime()
 
             pcf.album_id = photocard.album_id
             pcf.img = photocard.img
