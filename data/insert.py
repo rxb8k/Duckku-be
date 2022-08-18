@@ -34,7 +34,7 @@ def makeJsonData_Artist():
       'id' : id,
       'artist_name' : artist,
       'agency' : agency,
-      'artist_image' : img,
+      'artist_image' : glob.glob(f'./img/artist/{id}.jpg'),
     }
     ARTIST_ID[artist]=id
     artist_data_list.append(artist_data)
@@ -86,7 +86,7 @@ def makeJsonData_Photocard():
   image_list=glob.glob('./img/photocard/*.jpg') # 경로 확인 필요
 
   album_xlsx=pd.read_excel('album.xlsx')
-  
+
   album_name_list=album_xlsx['앨범명']
   artist_list=album_xlsx['아티스트']
 
@@ -94,6 +94,7 @@ def makeJsonData_Photocard():
     for album in album_name_list: # 앨범 개수만큼의 포토카드 객체 생성
         photocard_data=OrderedDict()
         name=Photoimg[16:-5]
+
         photocard_data["model"]="album.Photocard"
         photocard_data["fields"]={
           'id' : 1,
