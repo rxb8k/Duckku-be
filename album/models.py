@@ -21,11 +21,11 @@ class Album(models.Model):
     album_image = models.ImageField(blank = True, null = True, upload_to = 'sang_album_img')
     #music_list = models.TextField(null = True)
     #music_list = models.ManyToManyField(Music, related_name = 'sang_music_list', blank = True)
-    artist_name = models.CharField(max_length = 20, null = True)
     price_with_ticket = models.IntegerField(null = True, default = 0)
     price_without_ticket = models.IntegerField(null = True, default = 0)
     purchased_count = models.IntegerField(null = True, default = 0)
     album_type = models.CharField(max_length=20, null=True)
+    artist_name = models.CharField(max_length = 20, null = True)
 
     def __str__(self): 
         return self.name
@@ -57,6 +57,7 @@ class AlbumFrime(models.Model):
     #buyNumber = models.DateTimeField(auto_now_add = True, null = True)
     buyNumber = models.IntegerField(null = True, default = 0)
     album_type = models.CharField(max_length=20, null=True)
+    artist_name = models.CharField(max_length = 20, null = True)
 
     def __str__(self): 
         return self.name
