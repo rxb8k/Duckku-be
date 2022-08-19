@@ -46,6 +46,7 @@ urlpatterns = [
     path('qr/<int:photocard_id>', album_views.about_photocard_pr.as_view()),
     path('album_music_list_info/<int:sang_album_id>', album_views.Album_music_list_info.as_view()),
     path('show_all_artist_info', album_views.show_all_artist_info.as_view()),
+    path('getallalbums', album_views.GetAllAlbums.as_view()),
     #path('send_email', album_views.send_email.as_view()),
 ]
 

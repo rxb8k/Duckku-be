@@ -55,19 +55,20 @@ class AlbumInfo(APIView):
 class Album_music_list_info(APIView):
     def get(self, request, sang_album_id):
         ab = get_object_or_404(Album, pk = sang_album_id)
-        particular_album = AlbumSerializer(ab)
+        # particular_album = AlbumSerializer(ab)
+        musics = Music.objects.filter(album = ab)
+        serialized_rooms = Music(musics, many=True)
+        # music_id_list = particular_album.data['music_list']
 
-        music_id_list = particular_album.data['music_list']
-
-        queryset_list = Music.objects.filter(pk = music_id_list[0])
+        # queryset_list = Music.objects.filter(pk = music_id_list[0])
         
-        for music_id in music_id_list:
-            music = Music.objects.filter(pk = music_id)
-            queryset_list = queryset_list.union(music)
+        # for music_id in music_id_list:
+        #     music = Music.objects.filter(pk = music_id)
+        #     queryset_list = queryset_list.union(music)
         
-        result_music_list = MusicSerializer(queryset_list, many = True)
+        # result_music_list = MusicSerializer(queryset_list, many = True)
 
-        return Response(result_music_list.data)
+        return Response(serialized_rooms.data)
 
 
 class show_all_artist_info(APIView):
@@ -503,3 +504,9 @@ class GetPhotocardsFrime(APIView):
         serialized_rooms = PhotocardFrimeSerializer(pc, many=True)
         return Response(serialized_rooms.data)
 '''
+
+class GetAllAlbums(APIView):
+    def get(self, request):
+        albums = Album.objects.all()
+        serialized_rooms = AlbumSerializer(albums, many=True)
+        return Response(serialized_rooms.data)
