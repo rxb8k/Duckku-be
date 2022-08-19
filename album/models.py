@@ -2,13 +2,6 @@ from distutils.command.upload import upload
 from django.db import models
 from user.models import User
 
-class Music(models.Model):
-    music_name = models.CharField(max_length = 20, null = True)
-    play_time = models.CharField(max_length = 20, null = True)
-
-    def __str__(self):
-        return self.music_name
-
 class Artist(models.Model):
     artist_name = models.CharField(max_length=20, null=True)
     agency = models.CharField(max_length = 20, null = True)
@@ -27,7 +20,8 @@ class Album(models.Model):
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE, null=True)
     album_image = models.ImageField(blank = True, null = True, upload_to = 'sang_album_img')
     #music_list = models.TextField(null = True)
-    music_list = models.ManyToManyField(Music, related_name = 'sang_music_list', blank = True)
+    #music_list = models.ManyToManyField(Music, related_name = 'sang_music_list', blank = True)
+    artist_name = models.CharField(max_length = 20, null = True)
     price_with_ticket = models.IntegerField(null = True, default = 0)
     price_without_ticket = models.IntegerField(null = True, default = 0)
     purchased_count = models.IntegerField(null = True, default = 0)
@@ -35,6 +29,16 @@ class Album(models.Model):
 
     def __str__(self): 
         return self.name
+
+class Music(models.Model):
+    music_name = models.CharField(max_length = 20, null = True)
+    play_time = models.CharField(max_length = 20, null = True)
+    album = models.ForeignKey(Album, on_delete = models.CASCADE, null = True)
+
+    def __str__(self):
+        return self.music_name
+
+
 
 class AlbumFrime(models.Model):
     album_id =  models.ForeignKey(Album, on_delete=models.CASCADE)
