@@ -1,4 +1,5 @@
 import re
+from typing_extensions import get_overloads
 from django.shortcuts import get_object_or_404, render, get_list_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -116,11 +117,12 @@ class AlbumFrimeInfo(APIView):
 
 # 앨범 구매하기
 class BuyAlbum(APIView):
-    def post(self, request, sang_album_id):
+    def post(self, request, sang_album_id, user_id):
         # json 입력 값들
         ticket = int(request.data['album_with_ticket'])
         no_ticket = int(request.data['album_without_ticket'])
-        user = request.user
+        #user = request.user
+        user = get_object_or_404(User, pk = user_id)
         sang_album = get_object_or_404(Album, pk = sang_album_id)
 
         #if sang_album not in user.userBuyalbum_type_List:
@@ -259,9 +261,10 @@ class BuyAlbum(APIView):
 
 # 내가 찜한 상징성 엘범 리스트를 조회
 class ShowSubAlbumList(APIView):
-    def get(self, request):
+    def get(self, request, user_id):
         #subalbum_list = user.usersSubalbum_type_List
-        subalbum_list = ShowSubAlbumListSerializer(request.user)
+        #subalbum_list = ShowSubAlbumListSerializer(request.user)
+        subalbum_list = ShowSubAlbumListSerializer(User, pk = user_id)
         output_json = subalbum_list.data['usersSubalbum_type_List']
         return Response(output_json)
         #return Response(subalbum_list.data)
@@ -269,8 +272,9 @@ class ShowSubAlbumList(APIView):
 
 # 상징성 앨범 찜하기 버튼 
 class AddSubAlbum(APIView):
-    def post(self, request, sang_album_id):
-        user = request.user
+    def post(self, request, sang_album_id, user_id):
+        #user = request.user
+        user = get_object_or_404(User, pk = user_id)
         if user.usersSubalbum_type_List.filter(pk = sang_album_id).exists(): # 이미 찜한 상태라면 찜 목록에서 제거
             user.usersSubalbum_type_List.remove(sang_album_id)
             return Response({"message" : "찜 목록에서 제거성공!"})
@@ -281,8 +285,10 @@ class AddSubAlbum(APIView):
 
 # 관심 아티스트들의 상징성 앨범 리스트 조회 (스토어에서 나의 관심 아티스트의 앨범 조회 기능)
 class Show_my_artist_AlbumList(APIView):
-    def get(self, request):
-        my_artist = Artist_type_id_serializer(request.user)
+    def get(self, request, user_id):
+        user = get_object_or_404(User, pk = user_id)
+        #my_artist = Artist_type_id_serializer(request.user)
+        my_artist = Artist_type_id_serializer(user)
         my_artist_data = my_artist.data['userSubartist_type_List']
         my_artist_id_list = []  # 관심 아티스트의 id 값을 추출하고 저장하는 리스트
         for artist in my_artist_data:
@@ -305,8 +311,10 @@ class Show_my_artist_AlbumList(APIView):
 
 #/ 관심 아티스트들의 상징성 앨범 리스트를 인기순(판매량 순) 정렬 (스토어에서 내 관심 아티스트 앨범 더보기 누를때)
 class Show_artist_list_album_list_sort_popular(APIView):
-   def get(self, request):
-        my_artist = Artist_type_id_serializer(request.user)
+   def get(self, request, user_id):
+        user = get_object_or_404(User, pk = user_id)
+        my_artist = Artist_type_id_serializer(user)
+        #my_artist = Artist_type_id_serializer(request.user)
         my_artist_data = my_artist.data['userSubartist_type_List']
         my_artist_id_list = []  # 관심 아티스트의 id 값을 추출하고 저장하는 리스트
         for artist in my_artist_data:
@@ -329,8 +337,9 @@ class Show_artist_list_album_list_sort_popular(APIView):
 
 # 관심 아티스트들의 상징성 앨범 리스트를 최신순으로 정랼 (스토어에서 내 관심 아티스트 앨범 더보기 누를때)
 class Show_artist_list_album_list_sort_created_at(APIView):
-   def get(self, request):
-        my_artist = Artist_type_id_serializer(request.user)
+   def get(self, request, user_id):
+        user = get_object_or_404(User, pk = user_id)
+        my_artist = Artist_type_id_serializer(user)
         my_artist_data = my_artist.data['userSubartist_type_List']
         my_artist_id_list = []  # 관심 아티스트의 id 값을 추출하고 저장하는 리스트
         for artist in my_artist_data:
@@ -381,11 +390,21 @@ class Show_artist_list_album_list_sort_created_at(APIView):
 #         return Response(result_album_list.data)
 
 class buy_album_list(APIView):
-    def get(self, request, artist_id):
+    def get(self, request, artist_id, user_id):
+        user = get_object_or_404(User, pk = user_id)
         artist = get_object_or_404(Artist, pk = artist_id)
-        cnt = Count.objects.filter(user = request.user).filter(artist = artist)
+        cnt = Count.objects.filter(user = user).filter(artist = artist)
         serializerd_rooms = CountSerializer(cnt, many=True)
         return Response(serializerd_rooms.data)
+
+# 특정 아티스트에 대해 내가 구매한 포토카드 리스트를 조회
+class buy_photo_card_list(APIView):
+    def get(self, request, artist_id, user_id):
+        particular_artist = get_object_or_404(Artist, pk = artist_id)
+        user = get_object_or_404(User, pk = user_id)
+        photocard_frime_list = PhotocardFrime.objects.filter(artist = particular_artist, user = user)
+        new_photocard_frime_list = PhotocardFrimeSerializer(photocard_frime_list, many = True)
+        return Response(new_photocard_frime_list.data)
 
 '''
 # 특정 아티스트에 대해 내가 구매한 상징성 앨범 리스트 종류를 조회 (이떄 각 앨범마다의 개수 정보도 띄울것)
@@ -404,7 +423,7 @@ class buy_album_list(APIView):
 '''
 
 # 특정 아티스트에 대해 내가 구매한 포토카드 리스트를 조회
-class buy_photo_card_list(APIView):
+class user(APIView):
     def get(self, request, artist_id):
         particular_artist = get_object_or_404(Artist, pk = artist_id)
         photocard_frime_list = PhotocardFrime.objects.filter(artist = particular_artist, user = request.user)
@@ -414,20 +433,24 @@ class buy_photo_card_list(APIView):
 
 # 특정 아티스트에 대해 내가 구매한 응모권의 개수를 리턴
 class buy_ticket_count(APIView):
-    def get(self, request, artist_id):
+    def get(self, request, artist_id, user_id):
+        user = get_object_or_404(User, pk = user_id)
         particular_artist = get_object_or_404(Artist, pk = artist_id)
-        count = AlbumFrime.objects.filter(artist = particular_artist).filter(user = request.user).filter(contains_ticket = True).count()
+        count = AlbumFrime.objects.filter(artist = particular_artist).filter(user = user).filter(contains_ticket = True).count()
         return Response({"tickets_count" : count})
 
 
 # 특정 아티스트에 대한 응모권을 모두 응모처리 ("모두 응모하기" 버튼 기능)
 class ticket_use_complete(APIView):
-    def post(self, request, artist_id):
+    def post(self, request, artist_id, user_id):
+        user = get_object_or_404(User, pk = user_id)
         particular_artist = get_object_or_404(Artist, pk = artist_id)
         # 이벤트 앨범일 경우 User 모델의 Boolean 필드를 True 로 변경
         if(artist_id == 1): # 이벤트 앨범의 pk 값은 1로 일단 생각함
-            request.user.ticket_apply_complete = True # 응모 완료처리
-            request.user.save()
+            user.ticket_apply_complete = True
+            #request.user.ticket_apply_complete = True # 응모 완료처리
+            user.save()
+            #request.user.save()
         
         count = AlbumFrime.objects.filter(artist = particular_artist).filter(user = request.user).filter(contains_ticket = True).count()
 
