@@ -49,14 +49,16 @@ class Login(APIView):
 
 # 내 정보 보기, 내 정보 수정
 class userinfo(APIView):
-    def get(self, request):
-        user = request.user
+    def get(self, request, user_id):
+        # user = request.user
+        user = get_object_or_404(User, pk = user_id)
         data = User.objects.filter(id=user.id)
         serializer = UserSerializer(data, many=True)
         return Response(serializer.data)
 
     def patch(self, request):
-        user=request.user
+        # user=request.user
+        user = get_object_or_404(User, pk = user_id)
         data=User.objects.filter(id=user.id)
         serializer = UserSerializer(data, many=True)
         
@@ -139,7 +141,7 @@ class account_API(APIView):
 
 # 아티스트 구독, 삭제
 class SubArtist(APIView):
-    def patch(self, request):
+    def patch(self, request, user_id):
         # print(request.data) # {'artists': ['아이브', '에스파']}
 
         # request.data의 'artists'에 담긴 리스트를 순회하며 'req_artist' 리스트에 추가
@@ -148,7 +150,8 @@ class SubArtist(APIView):
         for i in range(artist_len): req_artist.append(request.data['artists'][i])
         print(req_artist)
         
-        user=request.user
+        # user=request.user
+        user = get_object_or_404(User, pk = user_id)
         for artist_id in req_artist:
             artist=get_object_or_404(Artist, pk = artist_id)
             user.userSubartist_type_List.add(artist)
@@ -159,13 +162,14 @@ class SubArtist(APIView):
             "message" : "관심 아티스트 구독이 완료되었어요!"
         })
         
-    def delete(self, request):
+    def delete(self, request, user_id):
         req_artist=[]
         artist_len=len(request.data['artists'])
         for i in range(artist_len): req_artist.append(request.data['artists'][i])
         print(req_artist)
         
-        user=request.user
+        # user=request.user
+        user = get_object_or_404(User, pk = user_id)
         for artist_id in req_artist:
             artist=get_object_or_404(Artist, pk = artist_id)
             user.userSubartist_type_List.remove(artist)
