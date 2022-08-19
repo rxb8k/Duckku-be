@@ -1,4 +1,5 @@
 import re
+from xmlrpc.client import APPLICATION_ERROR
 from django.shortcuts import get_object_or_404, render, get_list_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -144,6 +145,10 @@ class BuyAlbum(APIView):
             newab.artist = ab.artist
             newab.album_image = ab.album_image
             newab.album_type = ab.album_type
+
+            newab.artist_name = ab.artist_name
+            newab.price = ab.price_with_ticket
+
             
             #list_store = [1,2,3,4,5,'도깨비불', '블랙맘바', 'savage']
 
@@ -188,6 +193,9 @@ class BuyAlbum(APIView):
             newab.artist = ab.artist
             newab.album_image = ab.album_image
             newab.album_type = ab.album_type
+
+            newab.artist_name = ab.artist_name
+            newab.price = ab.price_without_ticket
 
             # 수록곡(music_list) 카피하기
             #list_store = list(ab.music_list)
@@ -251,6 +259,9 @@ class BuyAlbum(APIView):
             cnt.album_image = ab.album_image
             cnt.count += (ticket + no_ticket)
             cnt.artist = ab.artist
+            # cnt.artist_name = ab.artist_name
+            # cnt.price_with_ticket = ab.price_with_ticket
+            # cnt.contains_ticket = 
             cnt.save()
         
         user.userBuyalbum_type_List.add(sang_album)
@@ -509,3 +520,12 @@ class GetAllAlbums(APIView):
         albums = Album.objects.all()
         serialized_rooms = AlbumSerializer(albums, many=True)
         return Response(serialized_rooms.data)
+
+class GetAllPurchasedAlbums(APIView):
+    def get(self, reqeust, user_id):
+        user = get_object_or_404(User, pk = user_id)
+        albumfrimes = AlbumFrime.objects.filter(user = user)
+
+        serialized_rooms1 = AlbumFrimeSerializer(albumfrimes, many=True)
+        return Response({"Traded_albums":serialized_rooms1.data})
+
