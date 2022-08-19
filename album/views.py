@@ -527,5 +527,5 @@ class GetAllPurchasedAlbums(APIView):
         albumfrimes = AlbumFrime.objects.filter(user = user)
 
         serialized_rooms1 = AlbumFrimeSerializer(albumfrimes, many=True)
-        return Response({"Traded_albums":serialized_rooms1.data})
+        return Response(serialized_rooms1.data)
 
