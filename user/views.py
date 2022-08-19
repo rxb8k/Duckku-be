@@ -56,7 +56,7 @@ class userinfo(APIView):
         serializer = UserSerializer(data, many=True)
         return Response(serializer.data)
 
-    def patch(self, request):
+    def patch(self, request, user_id):
         # user=request.user
         user = get_object_or_404(User, pk = user_id)
         data=User.objects.filter(id=user.id)
