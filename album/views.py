@@ -1,5 +1,4 @@
 import re
-from typing_extensions import get_overloads
 from django.shortcuts import get_object_or_404, render, get_list_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -57,7 +56,7 @@ class Album_music_list_info(APIView):
         ab = get_object_or_404(Album, pk = sang_album_id)
         # particular_album = AlbumSerializer(ab)
         musics = Music.objects.filter(album = ab)
-        serialized_rooms = Music(musics, many=True)
+        serialized_rooms = MusicSerializer(musics, many=True)
         # music_id_list = particular_album.data['music_list']
 
         # queryset_list = Music.objects.filter(pk = music_id_list[0])
@@ -453,10 +452,10 @@ class ticket_use_complete(APIView):
             user.save()
             #request.user.save()
         
-        count = AlbumFrime.objects.filter(artist = particular_artist).filter(user = request.user).filter(contains_ticket = True).count()
+        count = AlbumFrime.objects.filter(artist = particular_artist).filter(user = user).filter(contains_ticket = True).count()
 
         # 특정 유저의 특정 아티스트에 대한 contains_ticket 필드를 False 로 변경 (어짜피 응모권 없는것이나 마찬가지이므로)
-        ticket_list = AlbumFrime.objects.filter(artist = particular_artist).filter(user = request.user).filter(contains_ticket = True)
+        ticket_list = AlbumFrime.objects.filter(artist = particular_artist).filter(user = user).filter(contains_ticket = True)
         for ticket in ticket_list:
             print(ticket.pk)
             ticket.contains_ticket = False
