@@ -130,8 +130,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.User'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # 이렇게 MEDIA_ROOT를 지정하면 미디어 파일이 저장되는 경로가 <BASE_DIR>/media/가 된다.
+MEDIA_URL = '/data/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'data') # 이렇게 MEDIA_ROOT를 지정하면 미디어 파일이 저장되는 경로가 <BASE_DIR>/media/가 된다.
 
 
 CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:8000')
