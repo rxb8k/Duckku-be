@@ -57,7 +57,7 @@ class Album_music_list_info(APIView):
         ab = get_object_or_404(Album, pk = sang_album_id)
         # particular_album = AlbumSerializer(ab)
         musics = Music.objects.filter(album = ab)
-        serialized_rooms = Music(musics, many=True)
+        serialized_rooms = MusicSerializer(musics, many=True)
         # music_id_list = particular_album.data['music_list']
 
         # queryset_list = Music.objects.filter(pk = music_id_list[0])
