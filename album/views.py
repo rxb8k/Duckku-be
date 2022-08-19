@@ -452,10 +452,10 @@ class ticket_use_complete(APIView):
             user.save()
             #request.user.save()
         
-        count = AlbumFrime.objects.filter(artist = particular_artist).filter(user = request.user).filter(contains_ticket = True).count()
+        count = AlbumFrime.objects.filter(artist = particular_artist).filter(user = user).filter(contains_ticket = True).count()
 
         # 특정 유저의 특정 아티스트에 대한 contains_ticket 필드를 False 로 변경 (어짜피 응모권 없는것이나 마찬가지이므로)
-        ticket_list = AlbumFrime.objects.filter(artist = particular_artist).filter(user = request.user).filter(contains_ticket = True)
+        ticket_list = AlbumFrime.objects.filter(artist = particular_artist).filter(user = user).filter(contains_ticket = True)
         for ticket in ticket_list:
             print(ticket.pk)
             ticket.contains_ticket = False
