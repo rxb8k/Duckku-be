@@ -27,10 +27,10 @@ urlpatterns = [
     path('Signup', csrf_exempt(views.Signup.as_view())),
     path('Login', views.Login.as_view()),
     path('Logout', views.Logout),
-    path('userinfo', csrf_exempt(views.userinfo.as_view())),
-    path('sub_artist', csrf_exempt(views.SubArtist.as_view())),
-    path('my_artist_list', artist_views.my_artist_list.as_view()),
-    path('my_artist_list/delete/<int:artist_id>', artist_views.delete_my),
+    path('userinfo/<int:user_id>', csrf_exempt(views.userinfo.as_view())),  #승찬
+    path('sub_artist/<int:user_id>', csrf_exempt(views.SubArtist.as_view())),   #승찬
+    path('my_artist_list/<int:user_id>', artist_views.my_artist_list.as_view()),    #승찬
+    path('my_artist_list/delete/<int:artist_id>/<int:user_id>', artist_views.delete_my),    #승찬
     path('show_album_info/<int:sang_album_id>', album_views.AlbumInfo.as_view()),
     path('buy_albums/<int:sang_album_id>', album_views.BuyAlbum.as_view()),
     path('show_subalbum_list', album_views.ShowSubAlbumList.as_view()),
