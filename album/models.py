@@ -57,7 +57,9 @@ class AlbumFrime(models.Model):
     #buyNumber = models.DateTimeField(auto_now_add = True, null = True)
     buyNumber = models.IntegerField(null = True, default = 0)
     album_type = models.CharField(max_length=20, null=True)
+
     artist_name = models.CharField(max_length = 20, null = True)
+    price = models.IntegerField(null=True)
 
     def __str__(self): 
         return self.name
@@ -89,5 +91,11 @@ class Count(models.Model):
     album_name = models.TextField(null=True)
     album_image = models.ImageField(blank = True, null = True, upload_to = 'sang_album_img')
     count = models.IntegerField(default = 0, null=True)
+
+    # purchased_date = models.DateField(auto_now_add=True, null = True)
+    # artist_name = models.TextField(null=True)
+    # contains_ticket = models.BooleanField(null=True)
+    # price_with_ticket = models.IntegerField(null = True, default = 0)
+    
 
 # Create your models here.
